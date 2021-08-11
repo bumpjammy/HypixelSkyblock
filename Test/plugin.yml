@@ -1,0 +1,29 @@
+name: TestPlugin
+main: io.github.bumpjammy.testplugin.Main
+version: 1.0
+api-version: 1.13
+commands: 
+    giveme:
+      description: Give Custom Item
+      usage: /giveme <item>
+    summoncustom:
+      description: Spawn Custom Mob
+      usage: /summoncustom <mob>
+    sbmenu:
+      description: SBMenu
+      usage: /sbmenu
+    givemoney:
+      description: Gives Money
+      usage: /givemoney <amount>
+    setmoney:
+      description: Sets Money
+      usage: /setmoney <amount>
+    bank:
+      description: Bank NPC
+      usage: /bank
+    is:
+      description: Island
+      usage: /is
+    hub:
+      description: Hub
+      usage: /hub
