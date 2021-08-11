@@ -37,11 +37,13 @@ import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerSwapHandItemsEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 import org.bukkit.inventory.CraftingInventory;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.scoreboard.Scoreboard;
@@ -102,6 +104,10 @@ public class ListenerClass implements Listener {
 				Teleport.island((Player) event.getPlayer());
 			}
 		}
+	}
+	
+	public void OnSwaphand(PlayerSwapHandItemsEvent event) {
+		event.setCancelled(false);
 	}
 	
 	@EventHandler
@@ -179,7 +185,7 @@ public class ListenerClass implements Listener {
 			Player player = (Player) event.getDamager();
 			int strength = PlayerInfo.findStats(player, "strength");
 			int damage = 0;
-			if(player.getInventory().getItemInMainHand() != null) {
+			if(player.getInventory().getItemInMainHand().equals(null)) {
 				ItemStack itemInHand = player.getInventory().getItemInMainHand();
 				List<String> itemLore = itemInHand.getItemMeta().getLore();
 				for(int i = 0; i < itemLore.size(); i++) {
@@ -215,10 +221,13 @@ public class ListenerClass implements Listener {
 	
 	@EventHandler
 	public void InventoryClickEvent(InventoryClickEvent event) throws IOException {
-		if(event.getInventory().equals(event.getWhoClicked().getInventory())) {
+		Bukkit.getLogger().info("1");
+		if(event.getClickedInventory() instanceof PlayerInventory) {
+			Bukkit.getLogger().info("2");
 			if(event.getSlot() == 8) {
 				event.setCancelled(true);
 				loadSBMenu((Player) event.getWhoClicked());
+				Bukkit.getLogger().info("3");
 			}
 		}
 		if(event.getView().getTitle().equals("Potions")) {
